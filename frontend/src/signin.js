@@ -17,11 +17,31 @@ const SignIn = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            console.log("Form submitted", userInput);
-            // Implement your submit logic here, e.g., making an API call
+            try {
+                const response = await fetch('./routes/userRoutes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userInput),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    console.log('Login successful', data);
+                    // Handle successful login here (e.g., redirect, store auth token)
+                } else {
+                    console.error('Login failed', data);
+                    setLoginError("Login failed. Please check your credentials and try again.");
+                }
+            } catch (error) {
+                console.error('Login request failed', error);
+                setLoginError("Error occurred while logging in. Please try again later.");
+            }
         }
     };
 
