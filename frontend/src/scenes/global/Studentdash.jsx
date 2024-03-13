@@ -30,7 +30,7 @@ const Item = ({ title, to, icon, selected, setSelected}) => {
   )
 }
 
-const Ssidebar = () => {
+const Studentdash = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -78,7 +78,6 @@ const Ssidebar = () => {
                   ADMIN IS
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                <MenuOpenIcon />
                 </IconButton>
               </Box>
             )}
@@ -92,7 +91,7 @@ const Ssidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/user.png`}
+                  src={`../../assets/user.png`} //LOGO img location
                   style={{ cursor: "pointer", borderRadius:"50%"}}
                 />
               </Box>
@@ -106,7 +105,7 @@ const Ssidebar = () => {
                 <Typography
                   variant="h5" 
                   color={colors.redAccent[500]} 
-                  >VP Admin
+                  >Bsc. CSIT
                 </Typography>
               </Box>
             </Box>
@@ -129,15 +128,15 @@ const Ssidebar = () => {
             </Typography>
 
             <Item 
-              title="Teacher"
-              to="/teacher"
+              title="Marks"
+              to="/marks"
               icon={<SupervisorAccountIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item 
-              title="Student"
-              to="/student"
+              title="Teacher"
+              to="/teacher"
               icon={<PersonIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -150,7 +149,7 @@ const Ssidebar = () => {
               setSelected={setSelected}
             />
             <Item 
-              title="Invoices Balances / Fees"
+              title="Fees"
               to="/invoices"
               icon={<ReceiptOutLinedIcon />}
               selected={selected}
@@ -164,8 +163,8 @@ const Ssidebar = () => {
               Pages
             </Typography>
             <Item 
-              title="Profile Form"
-              to="/form"
+              title="Log Out"
+              to="/"
               icon={<PersonOutLinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -184,4 +183,4 @@ const Ssidebar = () => {
   )
 }
 
-export default Ssidebar;
+export default Studentdash;
