@@ -9,10 +9,9 @@ import AddUserForm from "./components/AddUserForm";
 import EditUserForm from "./components/EditUserForm";
 import SignIn from "./components/SignIn";
 import { AuthProvider } from "./contexts/AuthContext";
-import Login from "./components/Login";
 function App() {
   return (
-    <AuthProvider>
+      <AuthProvider>
         <Router>
             <div>
                 <Header />
@@ -22,11 +21,11 @@ function App() {
                 <Route path="/teachers" element={<Teachers />} />
                 <Route path="/add-user" element={<AddUserForm />} />
                 <Route path="/edit-user/:userId" element={<EditUserForm />} />
-                <Route path="/admin" element={<Login />} /> {/* Add this line */}
+                {/*<Route path="/admin" element={<Login />} /> */}
                 <Route path="/signin" element={<SignIn />} /> {/* Add this line */}
             </Routes>
         </Router>
-    </AuthProvider>
+      </AuthProvider>
   );
 }
 

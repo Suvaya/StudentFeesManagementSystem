@@ -26,7 +26,7 @@ exports.loginUser = async (req, res) => {
         );
 
         // Modify the response here to include the user's role
-        res.json({ message: "Login successful", token, role: user.roles });
+        res.json({ message: "Login successful", token, username: user.username, role: user.roles });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

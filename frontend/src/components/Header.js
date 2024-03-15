@@ -1,25 +1,33 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+import { useAuth } from "../contexts/AuthContext"; // Update the path according to your file structure
 
 const Header = () => {
-    const { isAdminLoggedIn, logout } = useContext(AuthContext); // Destructure logout here
-
+    const { isLoggedIn, logout, username, role } = useAuth(); // Assuming role is also provided by useAuth
+    console.log("Current user role:", role);
+    console.log("Current user role:", username);
     return (
         <header>
             <nav>
                 <ul>
                     <li><Link to="/">Home</Link></li>
-                    {isAdminLoggedIn && (
+                    {role === 'admin' && (
                         <>
                             <li><Link to="/students">Students</Link></li>
                             <li><Link to="/teachers">Teachers</Link></li>
                             <li><Link to="/add-user">Add User</Link></li>
-                            {/* Logout Button */}
-                            <li><button onClick={logout}>Logout</button></li>
                         </>
                     )}
-                    {!isAdminLoggedIn && (
+                    {role === 'teacher' && (
+                        <li><Link to="/teachers">Teachers</Link></li>
+                    )}
+                    {isLoggedIn && (
+                        <>
+                            <li>{username}</li>
+                            <button onClick={logout}>Logout</button>
+                        </>
+                    )}
+                    {!isLoggedIn && (
                         <li><Link to="/signin">Sign In</Link></li>
                     )}
                 </ul>

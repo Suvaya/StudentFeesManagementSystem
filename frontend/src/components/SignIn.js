@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {useAuth} from "../contexts/AuthContext"; // Update the path according to your file structure
 
 const SignIn = () => {
     const [userInput, setUserInput] = useState({
@@ -9,9 +10,11 @@ const SignIn = () => {
     });
 
     const [errors, setErrors] = useState({});
-    // Define loginError state variable and its updater function setLoginError
     const [loginError, setLoginError] = useState("");
     const navigate = useNavigate();
+
+    // Use the login function from the AuthContext
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,25 +26,26 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Clear any previous login errors
         setLoginError("");
         if (validateForm()) {
             try {
                 const response = await axios.post('http://localhost:5000/api/auth/login', { email: userInput.username, password: userInput.password });
-                const { token, role } = response.data;
+                const { token, role, username } = response.data;
 
-                // Save the token in localStorage or cookies as per your requirement
-                localStorage.setItem('token', token);
+
+                // Use the login function from the AuthContext instead of directly interacting with localStorage
+                login( token, username, role);
 
                 // Route based on role
                 if (role.includes('teacher')) {
                     navigate('/teachers');
-                } else {
+                } else if (role.includes('student')) {
                     navigate('/students');
+                } else {
+                    navigate('/');
                 }
             } catch (error) {
                 console.error('Login error', error.response.data);
-                // Handle login error (e.g., show an error message)
                 setLoginError("Login failed. Please check your credentials and try again.");
             }
         }
@@ -94,7 +98,6 @@ const SignIn = () => {
                     </div>
                     <button type="submit">Sign In</button>
                 </form>
-                {/* Display login error if present */}
                 {loginError && <div className="error login-error">{loginError}</div>}
             </div>
         </div>

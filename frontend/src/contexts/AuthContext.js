@@ -1,42 +1,46 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-
-    // Function to check the token and update login status
-    const checkLoginStatus = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsAdminLoggedIn(true);
-        } else {
-            setIsAdminLoggedIn(false);
-        }
-    };
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [username, setUsername] = useState("");
+    const [role, setRole] = useState(""); // Initialize role state
 
     useEffect(() => {
-        // Check login status when the component mounts
-        checkLoginStatus();
+        const token = localStorage.getItem('token');
+        const storedUsername = localStorage.getItem('username');
+        const storedRole = localStorage.getItem('role'); // Retrieve role from localStorage
+        setIsLoggedIn(!!token);
+        if (token) {
+            setUsername(storedUsername);
+            setRole(storedRole); // Set role if token exists
+        }
     }, []);
 
-    const login = (token) => {
+    const login = (token, username, userRole) => { // Include userRole parameter
         localStorage.setItem('token', token);
-        setIsAdminLoggedIn(true);
+        localStorage.setItem('username', username);
+        localStorage.setItem('role', userRole); // Store role in localStorage
+        setIsLoggedIn(true);
+        setUsername(username);
+        setRole(userRole); // Update role state
     };
 
     const logout = () => {
         localStorage.removeItem('token');
-        setIsAdminLoggedIn(false);
+        localStorage.removeItem('username');
+        localStorage.removeItem('role'); // Clear role from localStorage
+        setIsLoggedIn(false);
+        setUsername("");
+        setRole(""); // Reset role state
     };
 
-    const value = {
-        isAdminLoggedIn,
-        login,
-        logout,
-    };
-
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ isLoggedIn, login, logout, username, role }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };

@@ -31,13 +31,13 @@ const userSchema = new mongoose.Schema({
 });
 
 // Keep the roles validation logic
-userSchema.path('roles').validate(function(roles) {
-    const isAdmin = roles.includes('admin');
-    const isTeacher = roles.includes('teacher');
-    if (isAdmin && !isTeacher) {
-        return false;
-    }
-    return true;
-}, 'An admin can be a teacher but not a student.');
+// userSchema.path('roles').validate(function(roles) {
+//     const isAdmin = roles.includes('admin');
+//     const isTeacher = roles.includes('teacher');
+//     if (isAdmin && !isTeacher) {
+//         return false;
+//     }
+//     return true;
+// }, 'An admin can be a teacher but not a student.');
 
 module.exports = mongoose.model('User', userSchema);
