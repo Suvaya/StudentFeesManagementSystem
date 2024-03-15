@@ -36,6 +36,7 @@ nav, nav ul {
   align-items: center;
   height: 80vh;
 }
+
 .login-form {
   background-color: #ffffff;
   border-radius: 8px;
@@ -61,7 +62,8 @@ nav, nav ul {
 
 /* Input fields styling */
 .login-form input[type="text"],
-.login-form input[type="password"] {
+.login-form input[type="password"],
+.login-form input[type="email"]{
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -72,7 +74,8 @@ nav, nav ul {
 
 /* Focus state for inputs */
 .login-form input[type="text"]:focus,
-.login-form input[type="password"]:focus {
+.login-form input[type="password"]:focus,
+.login-form input[type="email"]:focus {
   border-color: #66afe9;
   outline: none;
 }

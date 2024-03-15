@@ -7,7 +7,7 @@ function AddUserForm() {
         username: '',
         email: '',
         password: '',
-        roles: '',
+        roles: 'student',
     });
 
     const handleChange = (e) => {

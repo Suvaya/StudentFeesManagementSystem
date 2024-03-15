@@ -1,59 +1,40 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { AuthContext } from "../contexts/AuthContext";
 
-const LogIn = () => {
-    const [email, setEmail] = useState('');
+export const Login = () => {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate(); // Initialize useNavigate hook
 
-    const handleLogin = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-            const { token, role } = response.data;
 
-            // Save the token in localStorage or cookies as per your requirement
-            localStorage.setItem('token', token);
+        const response = await fetch('http://localhost:5000/admin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        });
 
-            // Route based on role
-            if (role.includes('teacher')) {
-                navigate('/teachers');
-            } else {
-                navigate('/students');
-            }
-        } catch (error) {
-            console.error('Login error', error.response.data);
-            // Handle login error (e.g., show an error message)
+        if (response.ok) {
+            const { token } = await response.json();
+            login(token); // Assuming this method updates the context state to reflect that the user is logged in
+            navigate('/'); // Redirect to Home page
+        } else {
+            alert('Failed to log in');
         }
     };
 
     return (
-        <div>
-            <h2>Sign In</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button type="submit">Login</button>
+        </form>
     );
 };
 
-export default LogIn;
+export default Login;

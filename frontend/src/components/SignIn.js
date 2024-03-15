@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const [userInput, setUserInput] = useState({
@@ -9,6 +11,7 @@ const SignIn = () => {
     const [errors, setErrors] = useState({});
     // Define loginError state variable and its updater function setLoginError
     const [loginError, setLoginError] = useState("");
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,26 +27,22 @@ const SignIn = () => {
         setLoginError("");
         if (validateForm()) {
             try {
-                const response = await fetch('backend/routes/userRoutes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userInput),
-                });
+                const response = await axios.post('http://localhost:5000/api/auth/login', { email: userInput.username, password: userInput.password });
+                const { token, role } = response.data;
 
-                const data = await response.json();
+                // Save the token in localStorage or cookies as per your requirement
+                localStorage.setItem('token', token);
 
-                if (response.ok) {
-                    console.log('Login successful', data);
-                    // Handle successful login here (e.g., redirect, store auth token)
+                // Route based on role
+                if (role.includes('teacher')) {
+                    navigate('/teachers');
                 } else {
-                    console.error('Login failed', data);
-                    setLoginError("Login failed. Please check your credentials and try again.");
+                    navigate('/students');
                 }
             } catch (error) {
-                console.error('Login request failed', error);
-                setLoginError("Error occurred while logging in. Please try again later.");
+                console.error('Login error', error.response.data);
+                // Handle login error (e.g., show an error message)
+                setLoginError("Login failed. Please check your credentials and try again.");
             }
         }
     };
@@ -55,18 +54,11 @@ const SignIn = () => {
         if (!userInput.username) {
             formIsValid = false;
             errors["username"] = "*Please enter your email.";
-        } else if (!/^[^@\s]+@gmail\.com$/.test(userInput.username)) {
-            formIsValid = false;
-            errors["username"] =
-                "*Please enter a valid email ending with @gmail.com.";
         }
 
         if (!userInput.password) {
             formIsValid = false;
             errors["password"] = "*Please enter your password.";
-        } else if (!/(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])/.test(userInput.password)) {
-            formIsValid = false;
-            errors["password"] = "*Password must contain at least one lowercase letter, one number, and one special character.";
         }
 
         setErrors(errors);
@@ -78,7 +70,28 @@ const SignIn = () => {
             <div className="login-form">
                 <form onSubmit={handleSubmit}>
                     <h2>Sign In</h2>
-                    {/* Form fields remain unchanged */}
+                    <div>
+                        <label>Email:</label>
+                        <input
+                            type="email"
+                            name="username"
+                            value={userInput.username}
+                            onChange={handleChange}
+                            required
+                        />
+                        {errors.username && <div className="error">{errors.username}</div>}
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            name="password"
+                            value={userInput.password}
+                            onChange={handleChange}
+                            required
+                        />
+                        {errors.password && <div className="error">{errors.password}</div>}
+                    </div>
                     <button type="submit">Sign In</button>
                 </form>
                 {/* Display login error if present */}

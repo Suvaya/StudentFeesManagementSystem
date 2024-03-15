@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
 
-function UserList({ role }) {
+import {Link, useNavigate} from "react-router-dom";
+
+function TeacherList() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -26,31 +27,38 @@ function UserList({ role }) {
             });
     }, []);
 
+    // Function stubs for edit and delete actions
     const handleEdit = (userId) => {
-        navigate(`/edit-user/${userId}`);
+        navigate(`/edit-user/${userId}`); // Redirects to the edit form
     };
 
     const handleDelete = (userId) => {
+        // Confirm before deleting
         if (window.confirm("Are you sure you want to delete this user?")) {
-            fetch(`http://localhost:5000/users/${userId}`, { method: 'DELETE' })
+            fetch(`http://localhost:5000/users/${userId}`, {
+                method: 'DELETE',
+            })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
+                    // Refresh the list of users or remove the user from state
                     setUsers(users.filter(user => user._id !== userId));
                 })
                 .catch(error => {
                     console.error('Error deleting user:', error);
+                    // Optionally, update the UI to show an error message
                 });
         }
     };
+
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
         <div>
-            <h2>{role.charAt(0).toUpperCase() + role.slice(1)} List</h2>
+            <h2>User List</h2>
             <table>
                 <thead>
                 <tr>
@@ -61,7 +69,8 @@ function UserList({ role }) {
                 </tr>
                 </thead>
                 <tbody>
-                {users.filter(user => user.role === role || (Array.isArray(user.roles) && user.roles.includes(role))).map((user, index) => (
+
+                {users.filter(user => user.role === 'teacher' || (Array.isArray(user.roles) && user.roles.includes('teacher'))).map((user, index) => (
                     <tr key={user._id}>
                         <td>{index + 1}</td>
                         <td>{user.username}</td>
@@ -78,4 +87,4 @@ function UserList({ role }) {
     );
 }
 
-export default UserList;
+export default TeacherList;

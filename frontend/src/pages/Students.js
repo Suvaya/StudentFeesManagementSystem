@@ -1,13 +1,13 @@
 import React from 'react';
+import UserList from "../components/UserList";
 // Import the UserList component
-import UserList from '../components/UserList';
 
 const Students = () => {
     return (
         <div>
             <h1>Students Page</h1>
             {/* Include the UserList component */}
-            <UserList />
+            <UserList role="student" />
         </div>
     );
 };
