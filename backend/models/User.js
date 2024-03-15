@@ -1,44 +1,39 @@
 const mongoose = require('mongoose');
 
-const userSchema= new mongoose.Schema({
-    username:{
+const userSchema = new mongoose.Schema({
+    username: {
         type: String,
         required: true,
         unique: true,
         trim: true,
         minlength: 3
     },
-    email:{
+    email: {
         type: String,
         required: true,
-        unique:true,
+        unique: true,
         validate: {
             validator: function(value) {
-                // Custom validation logic (e.g., regex pattern)
                 return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
             },
             message: props => `${props.value} is not a valid email address!`
         }
-
     },
-    password: { // Added password field
+    password: { // Password field remains but no bcrypt hashing
         type: String,
         required: true
     },
-    roles:{
-        type:[String],
-        enum:['admin', 'teacher', 'student'],
-        default:'student'
+    roles: {
+        type: [String],
+        enum: ['admin', 'teacher', 'student'],
+        default: 'student'
     }
 });
 
-//validation logic to ensure an admin can also be a teacher
+// Keep the roles validation logic
 userSchema.path('roles').validate(function(roles) {
-    // Check if 'admin' role is present
     const isAdmin = roles.includes('admin');
-    // Check if 'teacher' role is present
     const isTeacher = roles.includes('teacher');
-    // If admin role is present, teacher role should also be present
     if (isAdmin && !isTeacher) {
         return false;
     }

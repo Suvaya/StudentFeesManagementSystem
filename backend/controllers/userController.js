@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.getAllUsers = async(req, res)=>{
     try{
@@ -73,3 +75,4 @@ exports.deleteUserById = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+

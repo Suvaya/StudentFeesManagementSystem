@@ -11,9 +11,13 @@ const mongoose = require('mongoose');
 
 const uri = process.env.MONGO_URI;
 
+const authRoutes = require('./routes/authRoutes');
+
 app.use(express.json());
 
 app.use(cors());
+
+app.use('/api/auth', authRoutes);
 
 //Check if the server is running
 app.get('/', (req, res) => {
