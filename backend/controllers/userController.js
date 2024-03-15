@@ -27,71 +27,40 @@ exports.getUserById = async(req, res)=>{
 //create user and handle duplicate data
 exports.createUser = async (req, res) => {
     try {
-        let { username, email, roles } = req.body;
+        let { username, email, roles, password } = req.body;
 
-        // If roles is not provided or is not an array, set it to ['student'] by default
         if (!roles || !Array.isArray(roles)) {
             roles = ['student'];
         }
 
-        const newUser = new User({ username, email, roles });
+        const newUser = new User({ username, email, roles, password }); // Include password
         await newUser.save();
         res.status(201).json(newUser);
     } catch (err) {
-        if (err.code === 11000 && err.keyPattern.email) {
-            res.status(400).json({ message: "Email address already exists." });
-        } else if (err.code === 11000 && err.keyPattern.username) {
-            res.status(400).json({ message: "Username already exists." });
+        // Error handling remains the same
+        if (err.code === 11000) {
+            let message = "Duplicate field error.";
+            if (err.keyPattern.email) message = "Email address already exists.";
+            if (err.keyPattern.username) message = "Username already exists.";
+            res.status(400).json({ message });
         } else {
             res.status(400).json({ message: err.message });
         }
     }
 }
 
-// exports.createUser = async (req, res) => {
-//     try {
-//         let { username, email, roles } = req.body;
-//         // If roles is not provided, set it to 'student' by default
-//         // if (!roles) {
-//         //     roles = 'student';
-//         // }
-//         const newUser = new User({ username, email, roles });
-//         await newUser.save();
-//         res.status(201).json(newUser);
-//     } catch (err) {
-//         if (err.code === 11000 && err.keyPattern.email) {
-//             res.status(400).json({ message: "Email address already exists." });
-//         } else if (err.code === 11000 && err.keyPattern.username) {
-//             res.status(400).json({ message: "Username already exists." });
-//         } else {
-//             res.status(400).json({ message: err.message });
-//         }
-//     }
-// }
-
-
-// exports.createUser = async(req, res)=>{
-//     try{
-//         const {username, email, roles} = req.body;
-//         const newUser = await User({username, email, roles});
-//         newUser.save()
-//         res.status(201).json(newUser);
-//     }catch(err){
-//         res.status(400).json({message: err.message});
-//     }
-// }
-
-exports.updateUserById = async(req, res)=>{
-    try{
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        if(!updatedUser){
-            return res.status(404).json({messag:'User not found'});
+exports.updateUserById = async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
         }
         res.status(200).json(updatedUser);
-    }catch(err){
+    } catch (err) {
         res.status(400).json({ message: err.message });
     }
 };
+
 
 exports.deleteUserById = async (req, res) => {
     try {
