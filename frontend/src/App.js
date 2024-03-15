@@ -1,22 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import Teachers from './pages/Teachers';
-import Students from './pages/Students';
-// import Settings from './pages/Settings';
+import './App.css';
+import SignIn from './signin';
 
 function App() {
   return (
-      <Router>
-        <Switch>
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/teachers" component={Teachers} />
-          <Route path="/students" component={Students} />
-          {/*<Route path="/settings" component={Settings} />*/}
-          {/* Redirect to dashboard as a default route */}
-          <Route path="/" exact component={Dashboard} />
-        </Switch>
-      </Router>
+    <div className="App">
+      <header className="App-header">
+        <SignIn />
+      </header>
+    </div>
   );
 }
 

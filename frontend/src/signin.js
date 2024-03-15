@@ -21,7 +21,7 @@ const SignIn = () => {
         e.preventDefault();
         if (validateForm()) {
             try {
-                const response = await fetch('./routes/userRoutes', {
+                const response = await fetch('backend/routes/userRoutes', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
