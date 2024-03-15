@@ -1,7 +1,5 @@
 /* src/App.css */
-.App-header {
-  margin: 2rem;
-}
+
 
 .error {
   color: red;
@@ -14,7 +12,21 @@ input {
 }
 
 /* General body styling for background and font */
-body {
+body{
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7f6;
+  margin-top: 70px;
+}
+
+
+nav, nav ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* Styling the Sign In page container */
+.signin-page {
   font-family: 'Arial', sans-serif;
   background-color: #f4f7f6;
   margin: 0;
@@ -22,10 +34,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 80vh;
 }
-
-/* Styling the form container */
 .login-form {
   background-color: #ffffff;
   border-radius: 8px;
@@ -88,3 +98,37 @@ body {
 .login-form button:hover {
   background-color: #004094;
 }
+
+/* Header.css */
+
+/* Style the navigation bar */
+
+nav {
+  background-color: #333; /* Dark background color */
+  position: fixed; /* Fixed at the top */
+  top: 0;
+  left: 0; /* Align to the left edge */
+  z-index: 1000; /* Ensures the navbar is above other content */
+}
+
+nav ul {
+  list-style-type: none; /* Removes bullet points from the list */
+  display: flex; /* Align items in a row */
+  justify-content: flex-start; /* Align items to the start of the container */
+}
+
+nav ul li a {
+  display: block;
+  color: white; /* Text color */
+  text-align: center;
+  padding: 14px 16px; /* Padding for spacing */
+  text-decoration: none; /* Removes underlining from links */
+}
+
+/* Change the link color on hover */
+nav ul li a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Header end */
