@@ -1,26 +1,22 @@
 import React from 'react';
-import { ColorModeContext, useMode } from './theme';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { Routes, Route } from "react-router-dom";
-import Topbar from "./scenes/global/Topbar";
-import Admin from "./scenes/global/Admin";
-import Dashboard from "./scenes/dashboard";
-import Teacher from "./scenes/teacher";
-import Marks from "./scenes/marks";
-// import Studentdash from "./scenes/global/Studentdash";
-// import Student from "./scenes/student"
-// import Invoices from "./scenes/invoices";
-// import Contacts from "./scenes/contacts";
-// import Form from "./scenes/form";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import Teachers from './pages/Teachers';
+import Students from './pages/Students';
+// import Settings from './pages/Settings';
 
 function App() {
-  const [theme, colorMode] = useMode();
-  // const [isAdminView, setIsAdminView] = useState(true);
-  
   return (
-      <div className="app">
-        Hello World
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/teachers" component={Teachers} />
+          <Route path="/students" component={Students} />
+          {/*<Route path="/settings" component={Settings} />*/}
+          {/* Redirect to dashboard as a default route */}
+          <Route path="/" exact component={Dashboard} />
+        </Routes>
+      </Router>
   );
 }
 
