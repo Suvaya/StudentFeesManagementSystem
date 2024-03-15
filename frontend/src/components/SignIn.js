@@ -37,13 +37,9 @@ const SignIn = () => {
                 login( token, username, role);
 
                 // Route based on role
-                if (role.includes('teacher')) {
-                    navigate('/teachers');
-                } else if (role.includes('student')) {
-                    navigate('/students');
-                } else {
-                    navigate('/');
-                }
+                let targetRoute = '/';
+                
+                window.location.href = targetRoute;
             } catch (error) {
                 console.error('Login error', error.response.data);
                 setLoginError("Login failed. Please check your credentials and try again.");

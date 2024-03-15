@@ -21,6 +21,9 @@ const Header = () => {
                     {role === 'teacher' && (
                         <li><Link to="/teachers">Teachers</Link></li>
                     )}
+                    {role === 'student' && (
+                        <li><Link to="/students">Students</Link></li>
+                    )}
                     {isLoggedIn && (
                         <>
                             <li>{username}</li>
