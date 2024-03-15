@@ -18,34 +18,9 @@ function App() {
   // const [isAdminView, setIsAdminView] = useState(true);
   
   return (
-  <ColorModeContext.Provider value={colorMode}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
       <div className="app">
-        {/* <button onClick={() => setIsAdminView(!isAdminView)}>
-            {isAdminView ? 'Switch to Student View' : 'Switch to Admin View'}
-          </button> */}
-
-          {/* {isAdminView ? <Admin /> : <Studentdash />} */}
-
-        <Admin />
-        {/* <Studentdash /> */}
-
-        <main className="content">
-        <Topbar />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/teacher" element={<Teacher />} />
-          {/* <Route path="/student" element={<Student />} /> */}
-          {/* <Route path="/contacts" element={<Contacts />} /> */}
-          {/* <Route path="/invoices" element={<Invoices />} /> */}
-          {/* <Route path="/form" element={<Form />} /> */}
-          <Route path="/marks" element={<Marks />} />
-        </Routes>
-      </main>
-    </div>
-    </ThemeProvider>
-  </ColorModeContext.Provider>
+        Hello World
+      </div>
   );
 }
 
