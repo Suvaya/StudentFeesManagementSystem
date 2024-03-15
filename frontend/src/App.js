@@ -1,22 +1,32 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import Header from "./components/Header";
 import Teachers from './pages/Teachers';
 import Students from './pages/Students';
-// import Settings from './pages/Settings';
-
+import AddUserForm from "./components/AddUserForm";
+import EditUserForm from "./components/EditUserForm";
+import SignIn from "./components/SignIn";
+import { AuthProvider } from "./contexts/AuthContext";
+import Login from "./components/Login";
 function App() {
   return (
-      <Router>
-        <Switch>
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/teachers" component={Teachers} />
-          <Route path="/students" component={Students} />
-          {/*<Route path="/settings" component={Settings} />*/}
-          {/* Redirect to dashboard as a default route */}
-          <Route path="/" exact component={Dashboard} />
-        </Switch>
-      </Router>
+    <AuthProvider>
+        <Router>
+            <div>
+                <Header />
+            </div>
+            <Routes>
+                <Route path="/students" element={<Students />} />
+                <Route path="/teachers" element={<Teachers />} />
+                <Route path="/add-user" element={<AddUserForm />} />
+                <Route path="/edit-user/:userId" element={<EditUserForm />} />
+                <Route path="/admin" element={<Login />} /> {/* Add this line */}
+                <Route path="/signin" element={<SignIn />} /> {/* Add this line */}
+            </Routes>
+        </Router>
+    </AuthProvider>
   );
 }
 
