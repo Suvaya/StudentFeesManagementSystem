@@ -2,14 +2,13 @@ import React from 'react';
 import UserList from "../components/UserList";
 // Import the UserList component
 
-const Students = () => {
+const Users = () => {
     return (
         <div>
-            <h1>Students Page</h1>
-            {/* Include the UserList component */}
             <UserList role="student" />
+            <UserList role="teacher" />
         </div>
     );
 };
 
-export default Students;
+export default Users;
