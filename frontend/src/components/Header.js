@@ -13,16 +13,20 @@ const Header = () => {
                     <li><Link to="/">Home</Link></li>
                     {role === 'admin' && (
                         <>
-                            <li><Link to="/students">Students</Link></li>
-                            <li><Link to="/teachers">Teachers</Link></li>
+                            <li><Link to="/users">Users</Link></li>
                             <li><Link to="/add-user">Add User</Link></li>
                         </>
                     )}
-                    {role === 'teacher' && (
-                        <li><Link to="/teachers">Teachers</Link></li>
-                    )}
-                    {role === 'student' && (
+                    {role === 'student' &&  (
+                        <>
                         <li><Link to="/students">Students</Link></li>
+                        <li><Link to="/teachers">Teachers</Link></li>
+                        </>
+                    )}
+                    {role === 'teacher' &&  (
+                        <>
+                        <li><Link to="/students">Students</Link></li>
+                        </>
                     )}
                     {isLoggedIn && (
                         <>

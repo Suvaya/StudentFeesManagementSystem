@@ -10,6 +10,7 @@ import EditUserForm from "./components/EditUserForm";
 import SignIn from "./components/SignIn";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./route/ProtectedRoute";
+import Users from "./components/User";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
                 <Header />
             </div>
             <Routes>
+                <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
                 <Route path="/students" element={<ProtectedRoute><Students /></ProtectedRoute>} />
                 <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />
                 <Route path="/add-user" element={<ProtectedRoute><AddUserForm /></ProtectedRoute>} />
