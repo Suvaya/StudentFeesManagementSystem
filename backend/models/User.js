@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+    fullName: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true,
@@ -19,25 +23,24 @@ const userSchema = new mongoose.Schema({
             message: props => `${props.value} is not a valid email address!`
         }
     },
-    password: { // Password field remains but no bcrypt hashing
+    password: {
         type: String,
         required: true
+    },
+    address: {
+        type: String
+    },
+    phoneNumber: {
+        type: String
+    },
+    dateJoined: {
+        type: Date
     },
     roles: {
         type: [String],
         enum: ['admin', 'teacher', 'student'],
-        default: 'student'
+        default: ['student']
     }
 });
-
-// Keep the roles validation logic
-// userSchema.path('roles').validate(function(roles) {
-//     const isAdmin = roles.includes('admin');
-//     const isTeacher = roles.includes('teacher');
-//     if (isAdmin && !isTeacher) {
-//         return false;
-//     }
-//     return true;
-// }, 'An admin can be a teacher but not a student.');
 
 module.exports = mongoose.model('User', userSchema);

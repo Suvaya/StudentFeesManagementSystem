@@ -26,20 +26,21 @@ exports.getUserById = async(req, res)=>{
 
 };
 
-//create user and handle duplicate data
 exports.createUser = async (req, res) => {
     try {
-        let { username, email, roles, password } = req.body;
+        let { fullName, username, email, roles, password, address, phoneNumber, dateJoined } = req.body;
 
         if (!roles || !Array.isArray(roles)) {
             roles = ['student'];
         }
 
-        const newUser = new User({ username, email, roles, password }); // Include password
+        // Convert dateJoined to a proper Date object
+        dateJoined = new Date(dateJoined);
+
+        const newUser = new User({ fullName, username, email, roles, password, address, phoneNumber, dateJoined });
         await newUser.save();
         res.status(201).json(newUser);
     } catch (err) {
-        // Error handling remains the same
         if (err.code === 11000) {
             let message = "Duplicate field error.";
             if (err.keyPattern.email) message = "Email address already exists.";
@@ -75,4 +76,3 @@ exports.deleteUserById = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
-
