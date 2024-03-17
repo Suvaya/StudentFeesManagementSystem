@@ -4,10 +4,14 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, loading } = useAuth();
+
+    if (loading) {
+        // Optionally, provide feedback to the user that the app is loading
+        return <div>Loading...</div>;
+    }
 
     if (!isLoggedIn) {
-        // Redirect to the sign-in page if not logged in
         return <Navigate to="/signin" />;
     }
 

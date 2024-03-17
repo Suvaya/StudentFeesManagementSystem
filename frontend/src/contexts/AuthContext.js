@@ -6,40 +6,44 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loading, setLoading] = useState(true); // Add loading state
     const [username, setUsername] = useState("");
-    const [role, setRole] = useState(""); // Initialize role state
+    const [role, setRole] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         const storedUsername = localStorage.getItem('username');
-        const storedRole = localStorage.getItem('role'); // Retrieve role from localStorage
+        const storedRole = localStorage.getItem('role');
         setIsLoggedIn(!!token);
         if (token) {
             setUsername(storedUsername);
-            setRole(storedRole); // Set role if token exists
+            setRole(storedRole);
         }
+        setLoading(false); // Set loading to false after check
     }, []);
 
-    const login = (token, username, userRole) => { // Include userRole parameter
+    const login = (token, username, userRole) => {
         localStorage.setItem('token', token);
         localStorage.setItem('username', username);
-        localStorage.setItem('role', userRole); // Store role in localStorage
+        localStorage.setItem('role', userRole);
         setIsLoggedIn(true);
         setUsername(username);
-        setRole(userRole); // Update role state
+        setRole(userRole);
+        setLoading(false); // Ensure loading is false
     };
 
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
-        localStorage.removeItem('role'); // Clear role from localStorage
+        localStorage.removeItem('role');
         setIsLoggedIn(false);
         setUsername("");
-        setRole(""); // Reset role state
+        setRole("");
+        setLoading(false); // Ensure loading is false
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout, username, role }}>
+        <AuthContext.Provider value={{ isLoggedIn, loading, login, logout, username, role }}>
             {children}
         </AuthContext.Provider>
     );

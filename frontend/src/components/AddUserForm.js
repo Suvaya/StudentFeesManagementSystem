@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function AddUserForm() {
-    const navigate = useNavigate(); // For navigation after form submission
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
+        fullName: '',
         username: '',
         email: '',
         password: '',
-        roles: 'student',
+        address: '',
+        phoneNumber: '',
+        dateJoined: '',
+        roles: 'student', // Default role
     });
 
     const handleChange = (e) => {
@@ -20,10 +24,11 @@ function AddUserForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Convert roles string to array if not empty, otherwise default to an empty array
+        // Since roles is a single choice from the dropdown, wrap it in an array for consistency with the backend expectation
         const submitData = {
             ...formData,
-            roles: formData.roles ? formData.roles.split(',') : [],
+            roles: [formData.roles],
+            dateJoined: formData.dateJoined ? new Date(formData.dateJoined).toISOString() : undefined,
         };
 
         try {
@@ -35,22 +40,26 @@ function AddUserForm() {
                 body: JSON.stringify(submitData),
             });
 
-            const data = await response.json(); // Parse JSON response
+            const data = await response.json();
 
             if (!response.ok) {
                 throw new Error(data.message || 'Network response was not ok');
             }
 
             alert('User added successfully');
-            navigate('/students'); // Redirect to the students page or another appropriate page
+            navigate('/students');
         } catch (error) {
             console.error('Failed to add user:', error);
             alert(`Error adding user: ${error.message}`);
         }
     };
-
     return (
         <form onSubmit={handleSubmit}>
+            <div>
+                <label>Full Name:
+                    <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required />
+                </label>
+            </div>
             <div>
                 <label>Username:
                     <input type="text" name="username" value={formData.username} onChange={handleChange} required />
@@ -67,8 +76,26 @@ function AddUserForm() {
                 </label>
             </div>
             <div>
-                <label>Roles (comma-separated):
-                    <input type="text" name="roles" value={formData.roles} onChange={handleChange} placeholder="e.g., admin,user" />
+                <label>Address:
+                    <input type="text" name="address" value={formData.address} onChange={handleChange} />
+                </label>
+            </div>
+            <div>
+                <label>Phone Number:
+                    <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+                </label>
+            </div>
+            <div>
+                <label>Date Joined:
+                    <input type="date" name="dateJoined" value={formData.dateJoined} onChange={handleChange} />
+                </label>
+            </div>
+            <div>
+                <label>Roles:
+                    <select name="roles" value={formData.roles} onChange={handleChange}>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                    </select>
                 </label>
             </div>
             <button type="submit">Add User</button>

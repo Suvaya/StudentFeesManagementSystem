@@ -76,3 +76,29 @@ exports.deleteUserById = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+
+exports.updateUserDataBasedOnRole = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (user.roles.includes('teacher')) {
+            // Update teacher info
+            const { subjectsTaught, salary } = req.body;
+            user.teacherInfo = { subjectsTaught, salary };
+        } else if (user.roles.includes('student')) {
+            // Update student info
+            const { subjectsStudied, fees, marksObtained } = req.body;
+            user.studentInfo = { subjectsStudied, fees, marksObtained };
+        }
+
+        await user.save();
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};

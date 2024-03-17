@@ -12,5 +12,8 @@ router.route('/:id').put(userController.updateUserById)
 
 router.route('/:id').delete(userController.deleteUserById)
 
+router.put('/:id/role-update', userController.updateUserDataBasedOnRole);
+
+// router.put('/:id/role-update', userController.updateUserDataBasedOnRole);
 
 module.exports = router
