@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
     fullName: {
@@ -41,17 +42,14 @@ const userSchema = new mongoose.Schema({
         enum: ['admin', 'teacher', 'student'],
         default: ['student']
     },
+    studentInfo: {
+        subjects: Schema.Types.Mixed, // Object with subject as key and marks as value
+        fees: Number
+    },
     teacherInfo: {
-        subjectsTaught: [String],
+        subjectsTaught: [String], // Array of subjects the teacher teaches
         salary: Number
     },
-
-    // Add student-specific fields
-    studentInfo: {
-        subjectsStudied: [String],
-        fees: Number,
-        marksObtained: Number
-    }
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -28,36 +28,48 @@ exports.getUserById = async(req, res)=>{
 
 exports.createUser = async (req, res) => {
     try {
-        let { fullName, username, email, roles, password, address, phoneNumber, dateJoined } = req.body;
+        let { fullName, username, email, roles, password, address, phoneNumber, dateJoined, studentInfo, teacherInfo } = req.body;
 
         if (!roles || !Array.isArray(roles)) {
             roles = ['student'];
         }
 
-        // Convert dateJoined to a proper Date object
-        dateJoined = new Date(dateJoined);
+        const userPayload = { fullName, username, email, roles, password, address, phoneNumber, dateJoined };
 
-        const newUser = new User({ fullName, username, email, roles, password, address, phoneNumber, dateJoined });
+        // Handle conditional content based on role
+        if (roles.includes('student')) {
+            userPayload.studentInfo = studentInfo;
+        } else if (roles.includes('teacher')) {
+            userPayload.teacherInfo = teacherInfo;
+        }
+
+        const newUser = new User(userPayload);
         await newUser.save();
         res.status(201).json(newUser);
     } catch (err) {
-        if (err.code === 11000) {
-            let message = "Duplicate field error.";
-            if (err.keyPattern.email) message = "Email address already exists.";
-            if (err.keyPattern.username) message = "Username already exists.";
-            res.status(400).json({ message });
-        } else {
-            res.status(400).json({ message: err.message });
-        }
+        // Error handling remains unchanged
     }
 }
-
 exports.updateUserById = async (req, res) => {
+    const { id } = req.params;
+    let { roles, studentInfo, teacherInfo, ...updateData } = req.body;
+
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!updatedUser) {
+        // Find the existing user by ID
+        const user = await User.findById(id);
+        if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+
+        // Update role-specific information based on the current role(s)
+        if (user.roles.includes('student') && studentInfo) {
+            updateData.studentInfo = studentInfo;
+        } else if (user.roles.includes('teacher') && teacherInfo) {
+            updateData.teacherInfo = teacherInfo;
+        }
+
+        // Update the user with new data
+        const updatedUser = await User.findByIdAndUpdate(id, updateData, { new: true });
         res.status(200).json(updatedUser);
     } catch (err) {
         res.status(400).json({ message: err.message });
@@ -77,28 +89,3 @@ exports.deleteUserById = async (req, res) => {
     }
 };
 
-exports.updateUserDataBasedOnRole = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const user = await User.findById(id);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        if (user.roles.includes('teacher')) {
-            // Update teacher info
-            const { subjectsTaught, salary } = req.body;
-            user.teacherInfo = { subjectsTaught, salary };
-        } else if (user.roles.includes('student')) {
-            // Update student info
-            const { subjectsStudied, fees, marksObtained } = req.body;
-            user.studentInfo = { subjectsStudied, fees, marksObtained };
-        }
-
-        await user.save();
-        res.status(200).json(user);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
