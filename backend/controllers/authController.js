@@ -2,7 +2,7 @@ const User = require('../models/User'); // Adjust the path as necessary
 const jwt = require('jsonwebtoken');
 
 // Ensure sensitive values like JWT_SECRET are stored securely using environment variables
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;

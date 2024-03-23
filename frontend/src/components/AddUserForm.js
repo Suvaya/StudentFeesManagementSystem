@@ -47,7 +47,7 @@ function AddUserForm() {
             }
 
             alert('User added successfully');
-            navigate('/students');
+            navigate('/users');
         } catch (error) {
             console.error('Failed to add user:', error);
             alert(`Error adding user: ${error.message}`);
