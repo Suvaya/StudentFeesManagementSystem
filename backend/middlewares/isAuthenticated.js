@@ -3,7 +3,7 @@ const User = require('../models/User'); // Adjust the path as necessary
 require('dotenv').config();
 
 const isAuthenticated = async (req, res, next) => {
-    console.log("isAuthenticated middleware called");
+    console.log("isAuthenticated middleware called again");
     try {
         const token = req.headers.authorization.split(' ')[1]; // Assuming Bearer token
         if (!token) {

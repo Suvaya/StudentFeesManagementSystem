@@ -1,37 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
-function Students() {
+const StudentsList = () => {
     const [students, setStudents] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/users/students')
-            .then(response => {
-                setStudents(response.data);
-            })
-            .catch(error => {
-                console.error("There was an error fetching the student data:", error);
-            });
-    }, []);
+        const fetchStudents = async () => {
+            try {
+                // Retrieve the token from localStorage
+                const token = localStorage.getItem('token');
+
+                if (!token) {
+                    throw new Error('No token available');
+                }
+
+                const response = await fetch('http://localhost:5000/users/students', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Use the retrieved token
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch students data');
+                }
+
+                const data = await response.json();
+                setStudents(data);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+
+        fetchStudents();
+
+        // Cleanup function
+        return () => {
+            // Any cleanup code (if necessary)
+        };
+    }, []); // Empty dependency array to run effect only once when component mounts
 
     return (
         <div>
-            <h2>Student Details</h2>
-            {students.map(student => (
-                <div key={student._id}>
-                    <h3>{student.fullName}</h3>
-                    <p>Email: {student.email}</p>
-                    <p>Address: {student.address}</p>
-                    {student.studentInfo && student.studentInfo.subjects && 'Physics' in student.studentInfo.subjects ? (
-                        <>
-                            <h4>Physics Marks</h4>
-                            <p>Physics: {student.studentInfo.subjects['Physics']}</p>
-                        </>
-                    ) : null}
-                </div>
-            ))}
+            <h2>Students List</h2>
+            {error && <p>Error: {error}</p>}
+            <ul>
+                {students.map(student => (
+                    <li key={student._id}>
+                        Name: {student.name}, Email: {student.email} {/* Assuming students have name and email properties */}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
-}
+};
 
-export default Students;
+export default StudentsList;

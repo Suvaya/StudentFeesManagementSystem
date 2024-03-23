@@ -32,13 +32,14 @@ const SignIn = () => {
                 const response = await axios.post('http://localhost:5000/api/auth/login', { email: userInput.username, password: userInput.password });
                 const { token, role, username } = response.data;
 
+                // Store the token in localStorage or any other secure storage
+                localStorage.setItem('token', token);
 
                 // Use the login function from the AuthContext instead of directly interacting with localStorage
-                login( token, username, role);
+                login(token, username, role);
 
                 // Route based on role
                 let targetRoute = '/';
-                
                 window.location.href = targetRoute;
             } catch (error) {
                 console.error('Login error', error.response.data);
