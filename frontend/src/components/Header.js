@@ -17,15 +17,15 @@ const Header = () => {
                             <li><Link to="/add-user">Add User</Link></li>
                         </>
                     )}
-                    {role === 'student' &&  (
+                    {role === 'student' && (
                         <>
-                        <li><Link to="/students">Students</Link></li>
-                        <li><Link to="/teachers">Teachers</Link></li>
+                            <li><Link to="/students">Students</Link></li>
+                            <li><Link to="/teachers">Teachers</Link></li>
                         </>
                     )}
-                    {role === 'teacher' &&  (
+                    {role === 'teacher' && (
                         <>
-                        <li><Link to="/students">Students</Link></li>
+                            <li><Link to="/students">Students</Link></li>
                         </>
                     )}
                     {isLoggedIn && (
@@ -37,6 +37,7 @@ const Header = () => {
                     {!isLoggedIn && (
                         <li><Link to="/signin">Sign In</Link></li>
                     )}
+                    <li><Link to="/people">People</Link></li>
                 </ul>
             </nav>
         </header>
