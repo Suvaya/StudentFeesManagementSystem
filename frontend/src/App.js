@@ -11,6 +11,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./route/ProtectedRoute";
 import Users from "./components/User";
 import Students from "./pages/Students";
+import Subjects from "./components/Subjects";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />
                 <Route path="/add-user" element={<ProtectedRoute><AddUserForm /></ProtectedRoute>} />
                 <Route path="/edit-user/:userId" element={<ProtectedRoute><EditUserForm /></ProtectedRoute>} />
+                <Route path="/subjects" element={<Subjects />} />
                 <Route path="/signin" element={<SignIn />} />
             </Routes>
         </Router>
