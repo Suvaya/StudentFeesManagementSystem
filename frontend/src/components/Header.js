@@ -37,7 +37,7 @@ const Header = () => {
                     {!isLoggedIn && (
                         <li><Link to="/signin">Sign In</Link></li>
                     )}
-                    <li><Link to="/subjects">Subjects</Link></li>
+                    <li><Link to="/people">People</Link></li>
                 </ul>
             </nav>
         </header>
