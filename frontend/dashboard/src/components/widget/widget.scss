@@ -1,0 +1,58 @@
+.widget{
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  padding: 10px;
+  box-shadow: -25px 32px 23px -10px rgba(0,0,0,0.83);
+  -webkit-box-shadow: -25px 32px 23px -10px rgba(0,0,0,0.83);
+  -moz-box-shadow: -25px 32px 23px -10px rgba(0,0,0,0.83);
+  background-color: rgb(163, 220, 227);
+  border-radius: 10px;
+  width: 300px; /* Set the width of the Widget */
+  height: 100px; /* Set the height of the Widget */
+  margin-right: 200px; /* Adjust the margin as needed */
+  
+  .left, .right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .title{
+      font-weight: bold;
+      font-size: 25px;
+    }
+
+    .counter{
+      font-size: 35px;
+      padding-left: 100px;
+    }
+
+    .link{
+      font-size: 15px;
+    }
+
+    .icon{
+      font-size: 20px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+  }
+
+  .title1{
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 25px;
+    padding-right: 45px;
+  }
+
+  .subject{
+    font-weight: bold;
+    font-size: 16px;
+    padding-bottom: 15px;
+  }
+}
+
+//  to move first widget to right
+.widgets .widget:first-child {
+  margin-left: 50px; /* Adjust the margin as needed */
+}
