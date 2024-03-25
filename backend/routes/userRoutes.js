@@ -5,10 +5,9 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 
 router.get('/role/teacher', userController.getTeachers);
 router.get('/role/student', userController.getStudents);
-
+router.put('/:id/subjects/marks', userController.updateStudentSubjectMarks);
 router.put('/:id/updateFields', userController.updateUserFields);
 router.get('/students/mysubjects', isAuthenticated, userController.getStudentsByTeacherSubject);
-
 
 router.get('/', userController.getAllUsers);
 router.post('/', userController.createUser);

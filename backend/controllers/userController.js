@@ -142,6 +142,33 @@ const userController = {
             res.status(500).json({ message: error.message });
         }
     },
+    // In your userController:
+
+    updateStudentSubjectMarks: async (req, res) => {
+        try {
+            const { id } = req.params; // User ID from URL
+            const { subjectName, newMarks } = req.body; // Subject name and new marks from request body
+
+            // Find the student and update marks for the specified subject
+            const user = await User.findById(id);
+            if (!user || !user.roles.includes('student')) {
+                return res.status(404).json({ message: 'Student not found or incorrect role' });
+            }
+
+            // Find the subject and update its marks
+            const subjectIndex = user.subjectsStudied.findIndex(subject => subject.subjectName === subjectName);
+            if (subjectIndex === -1) {
+                return res.status(404).json({ message: 'Subject not found' });
+            }
+
+            user.subjectsStudied[subjectIndex].marks = newMarks; // Update the marks
+
+            await user.save(); // Save the updated user document
+            res.status(200).json({ message: 'Marks updated successfully', user });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
 
 
 
