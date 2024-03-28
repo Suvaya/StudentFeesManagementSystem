@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+
+// const apiUrl = process.env.REACT_APP_API_URL;
 
 const TeachInfo = () => {
     const { userId } = useAuth();
@@ -9,7 +17,7 @@ const TeachInfo = () => {
     useEffect(() => {
         const fetchTeacherDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/users/role/teacher/${userId}`, {
+                const response = await fetch(`http://localhost:5001/users/role/teacher/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -40,29 +48,29 @@ const TeachInfo = () => {
 
     return (
         <div>
-            <h2>Teacher Details</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Subjects Taught</th>
-                    <th>Salary</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{teacherDetails.fullName}</td>
-                    <td>{teacherDetails.email}</td>
-                    <td>{teacherDetails.address}</td>
-                    <td>{teacherDetails.phoneNumber}</td>
-                    <td>{teacherDetails.subjectsTaught.join(", ")}</td> {/* Assuming subjectsTaught is an array */}
-                    <td>${teacherDetails.salary.toLocaleString()}</td> {/* Format salary as a readable string */}
-                </tr>
-                </tbody>
-            </table>
+            <h2 align="center">Teacher Details</h2>
+             <TableContainer>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell className="tables" align="center">Full name</TableCell>
+                      <TableCell className="tables" align="center">Email</TableCell>
+                      <TableCell className="tables" align="center">Address</TableCell>
+                      <TableCell className="tables" align="center">Phone Number</TableCell>
+                      <TableCell className="tables" align="center">Subjects Taught</TableCell>
+                      <TableCell className="tables" align="center">Salary</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                        <TableCell align="center">{teacherDetails.fullName}</TableCell>
+                        <TableCell align="center">{teacherDetails.email}</TableCell>
+                        <TableCell align="center">{teacherDetails.address}</TableCell>
+                        <TableCell align="center">{teacherDetails.phoneNumber}</TableCell>
+                        <TableCell align="center">{teacherDetails.subjectsTaught.join(", ")}</TableCell> {/* Assuming subjectsTaught is an array */}
+                        <TableCell align="center">${teacherDetails.salary.toLocaleString()}</TableCell> {/*Format salary as a readable string*/}
+                  </TableBody>
+                </Table>
+             </TableContainer>
         </div>
     );
 };

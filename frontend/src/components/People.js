@@ -32,7 +32,7 @@ const People = () => {
         const subjects = subjectsInput.split(',').map(subject => subject.trim()); // Assuming subjects are comma-separated
         const fees = parseInt(feesInput);
         try {
-            const response = await fetch(`http://localhost:5000/users/${studentId}/studsubjects`, {
+            const response = await fetch(`http://localhost:5001/users/${studentId}/studsubjects`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

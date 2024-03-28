@@ -1,4 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
+import Input from '@mui/material/Input';
 
 const Teachers = () => {
     const [teachers, setTeachers] = useState([]);
@@ -8,7 +16,7 @@ const Teachers = () => {
     useEffect(() => {
         const fetchTeachers = async () => {
             try {
-                const response = await fetch('http://localhost:5000/users/role/teacher');
+                const response = await fetch('http://localhost:5001/users/role/teacher');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -41,7 +49,7 @@ const Teachers = () => {
     const handleEditFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:5000/users/${editingId}/updateFields`, {
+            const response = await fetch(`http://localhost:5001/users/${editingId}/updateFields`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,60 +72,62 @@ const Teachers = () => {
     };
 
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th>Subjects Taught</th>
-                <th>Salary</th>
-                <th>Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            {teachers.map(teacher => (
-                <tr key={teacher._id}>
-                    <td>{teacher.fullName}</td>
-                    <td>{teacher.email}</td>
-                    <td>{teacher.address}</td>
-                    <td>{teacher.phoneNumber}</td>
-                    <td>
-                        {editingId === teacher._id ? (
-                            <input
-                                type="text"
-                                name="subjectsTaught"
-                                value={editFormData.subjectsTaught.join(',')}
-                                onChange={handleEditFormChange}
-                            />
-                        ) : (
-                            teacher.subjectsTaught.join(', ')
-                        )}
-                    </td>
-                    <td>
-                        {editingId === teacher._id ? (
-                            <input
-                                type="number"
-                                name="salary"
-                                value={editFormData.salary}
-                                onChange={handleEditFormChange}
-                            />
-                        ) : (
-                            `$${teacher.salary}`
-                        )}
-                    </td>
-                    <td>
-                        {editingId === teacher._id ? (
-                            <button onClick={handleEditFormSubmit}>Save</button>
-                        ) : (
-                            <button onClick={() => handleEditClick(teacher)}>Edit</button>
-                        )}
-                    </td>
-                </tr>
-            ))}
-            </tbody>
-        </table>
+        <TableContainer>
+            <Table aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell align='center'>Full Name</TableCell>
+                        <TableCell align='center'>Email</TableCell>
+                        <TableCell align='center'>Address</TableCell>
+                        <TableCell align='center'>Phone Number</TableCell>
+                        <TableCell align='center'>Subjects Taught</TableCell>
+                        <TableCell align='center'>Salary</TableCell>
+                        <TableCell align='center'>Edit</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {teachers.map((teacher) => (
+                        <TableRow key={teacher._id}>
+                            <TableCell align='center'>{teacher.fullName}</TableCell>
+                            <TableCell align='center'>{teacher.email}</TableCell>
+                            <TableCell align='center'>{teacher.address}</TableCell>
+                            <TableCell align='center'>{teacher.phoneNumber}</TableCell>
+                            <TableCell align='center'>
+                                {editingId === teacher._id ? (
+                                    <Input
+                                        type="text"
+                                        name="subjectsTaught"
+                                        value={editFormData.subjectsTaught.join(',')}
+                                        onChange={handleEditFormChange}
+                                    />
+                                ) : (
+                                    teacher.subjectsTaught.join(', ')
+                               )}
+                            </TableCell>
+                            <TableCell align='center'>
+                                {editingId === teacher._id ? (
+                                    <Input
+                                        type="number"
+                                        name="salary"
+                                        value={editFormData.salary}
+                                        onChange={handleEditFormChange}
+                                    />
+                                ) : (
+                                    `$${teacher.salary}`
+                                )}
+                            </TableCell>
+                            <TableCell align='center'>
+                                {editingId === teacher._id ? (
+                                    <Button variant="contained" color="primary" onClick={handleEditFormSubmit}>Save</Button>
+                                ) : (
+                                    <Button variant="contained" color="primary" onClick={() => handleEditClick(teacher)}>Edit</Button>
+                                )}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 };
 
