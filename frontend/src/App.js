@@ -13,6 +13,7 @@ import Students from "./pages/Students";
 import People from "./components/People";
 import StudInfo from "./components/StudInfo";
 import TeachInfo from "./components/TeachInfo";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Header />
             </div>
             <Routes>
+                <Route path="/" element={<Home/>} />
                 <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
                 <Route path="/students" element={<ProtectedRoute><Students /></ProtectedRoute>} />
                 <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />

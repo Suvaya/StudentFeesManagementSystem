@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
 
 function UserList({ role }) {
     const [users, setUsers] = useState([]);
@@ -59,14 +58,14 @@ function UserList({ role }) {
     return (
         <div>
             <h2>{role.charAt(0).toUpperCase() + role.slice(1)} List</h2>
-            <TableContainer style={{ width: '100%' }}>
+            <TableContainer className="usertab">
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>S.N.</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell className='userstable'>S.N.</TableCell>
+                            <TableCell className='userstable'>Username</TableCell>
+                            <TableCell className='userstable'>Email</TableCell>
+                            <TableCell className='userstable'>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

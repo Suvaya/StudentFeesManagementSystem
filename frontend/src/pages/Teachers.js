@@ -72,7 +72,7 @@ const Teachers = () => {
     };
 
     return (
-        <TableContainer>
+        <TableContainer className='Teachertable'>
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>

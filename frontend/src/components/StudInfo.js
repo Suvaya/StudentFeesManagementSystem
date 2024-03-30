@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext'; // Importing the AuthContext
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 const StudInfo = () => {
     const { userId } = useAuth(); // Destructure to get userId from AuthContext
@@ -42,32 +48,34 @@ const StudInfo = () => {
     return (
         <div>
             <h2>Student Details</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                    <th>Subjects Studied</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{studentDetails.fullName}</td>
-                    <td>{studentDetails.email}</td>
-                    <td>{studentDetails.address}</td>
-                    <td>{studentDetails.phoneNumber}</td>
-                    <td>
-                        <ul>
-                            {studentDetails.subjectsStudied.map(subject => (
-                                <li key={subject._id}>{subject.subjectName} - Marks: {subject.marks}</li>
-                            ))}
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <TableContainer>
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className="tables" align="center"><strong>Full Name</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Email</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Address</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Phone Number</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Subjects Studied</strong></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell align="center">{studentDetails.fullName}</TableCell>
+                            <TableCell align="center">{studentDetails.email}</TableCell>
+                            <TableCell align="center">{studentDetails.address}</TableCell>
+                            <TableCell align="center">{studentDetails.phoneNumber}</TableCell>
+                            <TableCell align="center">
+                            <ul style={{ listStyleType: 'none', padding: 0 }}>
+                                {studentDetails.subjectsStudied.map(subject => (
+                                    <li key={subject._id}>{subject.subjectName} - Marks: {subject.marks}</li>
+                                ))}
+                            </ul>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </div>
     );
 };

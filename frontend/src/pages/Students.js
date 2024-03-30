@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import "../App.css";
 
 
 const StudentsByTeacherSubject = () => {
@@ -81,14 +82,14 @@ const StudentsByTeacherSubject = () => {
         <div>
             <h2>Students By Teacher's Subject</h2>
             {isLoggedIn ? (
-                <TableContainer style={{ width: '100%' }}>
+                <TableContainer>
                     <TableHead>
                         <TableRow>
-                            <TableCell align='center'>Student Name</TableCell>
-                            <TableCell align='center'>Email</TableCell>
-                            <TableCell align='center'>Subject</TableCell>
-                            <TableCell align='center'>Marks</TableCell>
-                            <TableCell align='center'>Actions</TableCell>
+                            <TableCell className="tablewidth" align='center'><strong>Student Name</strong></TableCell>
+                            <TableCell className="tablewidth" align='center'><strong>Email</strong></TableCell>
+                            <TableCell className="tablewidth" align='center'><strong>Subject</strong></TableCell>
+                            <TableCell className="tablewidth" align='center'><strong>Marks</strong></TableCell>
+                            <TableCell className="tablewidth" align='center'><strong>Actions</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -97,12 +98,12 @@ const StudentsByTeacherSubject = () => {
                                 <TableRow key={`${student._id}-${subject._id}`}>
                                     {subjectIndex === 0 && (
                                         <>
-                                            <TableCell rowSpan={student.subjectsStudied.length}>{student.fullName}</TableCell>
-                                            <TableCell rowSpan={student.subjectsStudied.length}>{student.email}</TableCell>
+                                            <TableCell rowSpan={student.subjectsStudied.length} align="center">{student.fullName}</TableCell>
+                                            <TableCell rowSpan={student.subjectsStudied.length} align="center">{student.email}</TableCell>
                                         </>
                                     )}
-                                    <TableCell>{subject.subjectName}</TableCell>
-                                    <TableCell>
+                                    <TableCell align="center">{subject.subjectName}</TableCell>
+                                    <TableCell align="center">
                                         {editStudentId?.studentId === student._id && editStudentId?.subjectId === subject._id ? (
                                             <Input type="number" value={newMarks[subject._id]} onChange={(e) => handleMarksChange(subject._id, e.target.value)} />
                                         ) : (
