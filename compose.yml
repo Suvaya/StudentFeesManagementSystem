@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # Expose backend on port 5000
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/server # Mount the backend code into the container
+      - /node_modules # Keep node_modules in a named volume
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expose frontend on port 3000
+    volumes:
+      - ./frontend:/src/app # Mount the frontend code into the container
+      - /node_modules # Keep node_modules in a named volume
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017" # Expose MongoDB on the default port
+    volumes:
+      - mongo-data:/data/db # Persist MongoDB data
+
+volumes:
+  mongo-data:

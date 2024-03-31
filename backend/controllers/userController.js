@@ -80,6 +80,38 @@ const userController = {
             res.status(500).json({ message: error.message });
         }
     },
+
+    getTeacherById: async (req, res) => {
+        try {
+            const user = await User.findById(req.params.id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            if (!user.roles.includes('teacher')) {
+                return res.status(400).json({ message: 'User is not a teacher' });
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    // Fetch a student by ID
+    getStudentById: async (req, res) => {
+        try {
+            const user = await User.findById(req.params.id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            if (!user.roles.includes('student')) {
+                return res.status(400).json({ message: 'User is not a student' });
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
 // Update specific fields of a user based on their role
     updateUserFields: async (req, res) => {
         try {
@@ -142,9 +174,88 @@ const userController = {
             res.status(500).json({ message: error.message });
         }
     },
+    // In your userController:
 
+    updateStudentSubjectMarks: async (req, res) => {
+        try {
+            const { id } = req.params; // User ID from URL
+            const { subjectName, newMarks } = req.body; // Subject name and new marks from request body
 
+            // Find the student and update marks for the specified subject
+            const user = await User.findById(id);
+            if (!user || !user.roles.includes('student')) {
+                return res.status(404).json({ message: 'Student not found or incorrect role' });
+            }
 
+            // Find the subject and update its marks
+            const subjectIndex = user.subjectsStudied.findIndex(subject => subject.subjectName === subjectName);
+            if (subjectIndex === -1) {
+                return res.status(404).json({ message: 'Subject not found' });
+            }
+
+            user.subjectsStudied[subjectIndex].marks = newMarks; // Update the marks
+
+            await user.save(); // Save the updated user document
+            res.status(200).json({ message: 'Marks updated successfully', user });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    addSubjectsToUser: async (req, res) => {
+        const { userId } = req.params;
+        const { subjects, fees } = req.body; // Destructure to get subjects and fees from the body
+
+        try {
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            if (!user.roles.includes('student')) {
+                return res.status(400).json({ message: 'This operation is only allowed for students' });
+            }
+
+            let updatesMade = false; // Track if any updates are made
+
+            // Update fees if it's provided
+            if (fees !== undefined) {
+                user.fees = fees;
+                updatesMade = true;
+            }
+
+            // Continue with subjects update logic only if subjects are provided
+            if (subjects && subjects.length > 0) {
+                // Filter out subjects that already exist in the user's subjectsStudied
+                const uniqueNewSubjects = subjects.filter(newSubject =>
+                    !user.subjectsStudied.some(existingSubject => existingSubject.subjectName === newSubject));
+
+                // If there are unique new subjects, prepare them with a default mark of 0
+                if (uniqueNewSubjects.length > 0) {
+                    const subjectsWithMarks = uniqueNewSubjects.map(subject => ({
+                        subjectName: subject,
+                        marks: 0
+                    }));
+
+                    // Add unique subjects to user's subjectsStudied
+                    user.subjectsStudied.push(...subjectsWithMarks);
+                    updatesMade = true;
+                }
+            }
+
+            if (updatesMade) {
+                // Save the user document if any updates were made
+                await user.save();
+                res.status(200).json(user);
+            } else {
+                // If no updates were made
+                res.status(200).json({ message: 'No updates were made', user });
+            }
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: error.message });
+        }
+    },
 };
 
 
