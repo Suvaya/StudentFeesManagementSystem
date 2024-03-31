@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext'; // Import useTheme hook
 
 function AddUserForm() {
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ function AddUserForm() {
         dateJoined: '',
         roles: 'student', // Default role
     });
+    
+    const { theme } = useTheme(); // Get the current theme
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -53,47 +56,46 @@ function AddUserForm() {
             alert(`Error adding user: ${error.message}`);
         }
     };
+
     return (
-        <form className="user-form" onSubmit={handleSubmit}>
-    <div className="form-group">
-        <label htmlFor="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
-    </div>
-    <div className="form-group">
-        <label htmlFor="username">Username:</label>
-        <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
-    </div>
-    <div className="form-group">
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-    </div>
-    <div className="form-group">
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
-    </div>
-    <div className="form-group">
-        <label htmlFor="address">Address:</label>
-        <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
-    </div>
-    <div className="form-group">
-        <label htmlFor="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-    </div>
-    <div className="form-group">
-        <label htmlFor="dateJoined">Date Joined:</label>
-        <input type="date" id="dateJoined" name="dateJoined" value={formData.dateJoined} onChange={handleChange} />
-    </div>
-    <div className="form-group">
-        <label htmlFor="roles">Roles:</label>
-        <select id="roles" name="roles" value={formData.roles} onChange={handleChange}>
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-        </select>
-    </div>
-    <button className="add-user-button" type="submit">Add User</button>
-</form>
-
-
+        <form className={`user-form ${theme === 'dark' ? 'dark' : ''}`} onSubmit={handleSubmit}>
+            <div className="form-group">
+                <label htmlFor="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+                <label htmlFor="username">Username:</label>
+                <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
+            </div>
+            <div className="form-group">
+                <label htmlFor="address">Address:</label>
+                <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+                <label htmlFor="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+                <label htmlFor="dateJoined">Date Joined:</label>
+                <input type="date" id="dateJoined" name="dateJoined" value={formData.dateJoined} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+                <label htmlFor="roles">Roles:</label>
+                <select id="roles" name="roles" value={formData.roles} onChange={handleChange}>
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                </select>
+            </div>
+            <button className="add-user-button" type="submit">Add User</button>
+        </form>
     );
 }
 

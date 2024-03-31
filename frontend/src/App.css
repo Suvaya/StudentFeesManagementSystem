@@ -1,6 +1,4 @@
 /* src/App.css */
-
-
 .error {
   color: red;
   font-size: 0.8rem;
@@ -16,8 +14,12 @@ body{
   font-family: 'Arial', sans-serif;
   background-color: #f4f7f6;
   margin-top: 70px;
+  transition: color 0.3s, background-color 0.3s; /* Added transition for smooth color change */
 }
 
+body.dark {
+  color: white; /* Text color in dark mode */
+}
 
 nav, nav ul {
   margin: 0;
@@ -80,6 +82,11 @@ html {
     margin-left: 3%;
 }
 
+/* Dark mode text color */
+body.dark,
+body.dark .navbar a {
+    color: white;
+}
 
 
 .btns {
@@ -184,16 +191,60 @@ button.learn-more:active::before {
 }
 
 .usertab {
-  margin-top: 50px;
+  margin-top: 30px;
+  width: 85% !important;
+  margin-left: 280px;
 }
-
 
 .peopletable {
   margin-top: 50px; /* Adjust the value as needed */
+  width: 85% !important;
+  margin-left: 230px;
 }
+
+/* For EditUserForm */
+/* .user-form.dark {
+  background-color: black;
+  color: white;
+} */
+
+/* For People */
+/* .peopletable.dark-text {
+  color: white; Text color in dark mode 
+} */
 
 .Teachertable{
   margin-top: 50px; /* Adjust the value as needed */
+  width: 85% !important;
+  margin-left: 230px;
+}
+
+.Studenttable{
+  margin-top: 50px; /* Adjust the value as needed */
+  width: 85% !important;
+  margin-left: 190px;
+}
+
+.Studenttable1{
+  margin-top: 50px; /* Adjust the value as needed */
+  margin-left: 285px;
+}
+
+.Teachtable{
+  margin-top: 50px; /* Adjust the value as needed */
+  width: 85% !important;
+  margin-left: 230px;
+}
+
+.Studtable{
+  margin-top: 50px; /* Adjust the value as needed */
+  width: 85% !important;
+  margin-left: 250px;
+}
+
+.Studtable1{
+  margin-top: 50px; /* Adjust the value as needed */
+  margin-left: 290px;
 }
 
 /* Styling the Sign In page container */
@@ -274,14 +325,19 @@ button.learn-more:active::before {
 }
 
 /* For EditStudentID css */
+.user-form.dark {
+  background-color: black;
+  color: white;
+}
+
 .edit-form {
   margin-top: 20px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f9f9f9;
+  background-color: #e4e9f7;
   max-width: 400px; /* Set a maximum width for the form */
-  margin-left: auto; /* Align form to the left */
+  /* margin-left: 100%; Align form to the left */
   margin-right: auto;
 }
 
@@ -338,13 +394,13 @@ button:hover {
 
 /* For add user page */
 .user-form {
-  max-width: 400px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-  margin-top: 85px;
+  margin-top: 35px;
 }
 
 .form-group {

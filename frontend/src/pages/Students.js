@@ -80,9 +80,9 @@ const StudentsByTeacherSubject = () => {
 
     return (
         <div>
-            <h2>Students By Teacher's Subject</h2>
+            <div className='Studenttable1'><h2>Students By Teacher's Subject</h2></div>
             {isLoggedIn ? (
-                <TableContainer>
+                <TableContainer className='Studenttable'>
                     <TableHead>
                         <TableRow>
                             <TableCell className="tablewidth" align='center'><strong>Student Name</strong></TableCell>

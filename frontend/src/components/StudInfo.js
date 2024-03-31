@@ -47,8 +47,8 @@ const StudInfo = () => {
 
     return (
         <div>
-            <h2>Student Details</h2>
-            <TableContainer>
+            <h2 className='Studtable1'>Student Details</h2>
+            <TableContainer className='Studtable'>
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -65,7 +65,7 @@ const StudInfo = () => {
                             <TableCell align="center">{studentDetails.email}</TableCell>
                             <TableCell align="center">{studentDetails.address}</TableCell>
                             <TableCell align="center">{studentDetails.phoneNumber}</TableCell>
-                            <TableCell align="center">
+                            <TableCell>
                             <ul style={{ listStyleType: 'none', padding: 0 }}>
                                 {studentDetails.subjectsStudied.map(subject => (
                                     <li key={subject._id}>{subject.subjectName} - Marks: {subject.marks}</li>

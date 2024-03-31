@@ -92,7 +92,7 @@ const Teachers = () => {
                             <TableCell align='center'>{teacher.email}</TableCell>
                             <TableCell align='center'>{teacher.address}</TableCell>
                             <TableCell align='center'>{teacher.phoneNumber}</TableCell>
-                            <TableCell align='center'>
+                            <TableCell>
                                 {editingId === teacher._id ? (
                                     <Input
                                         type="text"

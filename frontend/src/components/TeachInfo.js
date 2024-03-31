@@ -48,17 +48,17 @@ const TeachInfo = () => {
 
     return (
         <div>
-            <h2 align="center">Teacher Details</h2>
-             <TableContainer>
+            <h2 align="center" className='Teachtable'>Teacher Details</h2>
+             <TableContainer className='Teachtable'>
                 <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell className="tables" align="center">Full name</TableCell>
-                      <TableCell className="tables" align="center">Email</TableCell>
-                      <TableCell className="tables" align="center">Address</TableCell>
-                      <TableCell className="tables" align="center">Phone Number</TableCell>
-                      <TableCell className="tables" align="center">Subjects Taught</TableCell>
-                      <TableCell className="tables" align="center">Salary</TableCell>
+                      <TableCell className="tables" align="center"><strong>Full name</strong></TableCell>
+                      <TableCell className="tables" align="center"><strong>Email</strong></TableCell>
+                      <TableCell className="tables" align="center"><strong>Address</strong></TableCell>
+                      <TableCell className="tables" align="center"><strong>Phone Number</strong></TableCell>
+                      <TableCell className="tables" align="center"><strong>Subjects Taught</strong></TableCell>
+                      <TableCell className="tables" align="center"><strong>Salary</strong></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

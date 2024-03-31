@@ -57,7 +57,7 @@ function UserList({ role }) {
 
     return (
         <div>
-            <h2>{role.charAt(0).toUpperCase() + role.slice(1)} List</h2>
+            <div className='usertab'><h2>{role.charAt(0).toUpperCase() + role.slice(1)} List</h2></div>
             <TableContainer className="usertab">
                 <Table aria-label="simple table">
                     <TableHead>
