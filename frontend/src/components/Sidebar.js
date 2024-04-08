@@ -18,8 +18,8 @@ const Sidebar = () => {
       { to: "/add-user", label: "Add User" },
     ],
     teacher: [
+      {to: "/teachinfo", label: "Profile" },
       { to: "/students", label: "Students" },
-      { to: "/teachinfo", label: "Profile" },
     ],
     student: [{ to: "/studinfo", label: "Profile" }],
   };

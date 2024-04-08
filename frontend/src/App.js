@@ -1,13 +1,11 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Header from "./components/Header";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Teachers from "./pages/Teachers";
 import AddUserForm from "./components/AddUserForm";
 import EditUserForm from "./components/EditUserForm";
 import SignIn from "./components/SignIn";
-// import { AuthProvider } from "./contexts/AuthContext";
-import RoleProtectedRoute from "./route/RoleProtectedRoute"; // Ensure this path is correct
+import RoleProtectedRoute from "./route/RoleProtectedRoute"; 
 import Users from "./components/User";
 import Students from "./pages/Students";
 import People from "./components/People";
@@ -20,22 +18,22 @@ import Home from "./pages/Home";
 
 function App() {
   const { isLoggedIn, role } = useAuth();
+
   return (
     <ThemeProvider>
       <AuthProvider>
         <Router>
           <div>
-            <Header />
-            {isLoggedIn &&
-              (role === "student" ||
-                role === "teacher" ||
-                role === "admin") && <Sidebar />}
+            {isLoggedIn && (role === "student" || role === "teacher" || role === "admin") && <Sidebar />}
           </div>
           <Routes>
-            <Route
-              path="/"
-              element={
-                  <Home />
+            <Route 
+              path="/" 
+              element={isLoggedIn ? 
+                (role === "teacher" ? <Navigate to="/teachinfo" /> : 
+                role === "student" ? <Navigate to="/studinfo" /> :
+                role === "admin" ? <Navigate to="/users" /> : <Home />)
+                : <Home />
               }
             />
             <Route

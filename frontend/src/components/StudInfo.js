@@ -47,7 +47,7 @@ const StudInfo = () => {
 
     return (
         <div>
-            <h2 className='Studtable1'>Student Details</h2>
+            <h2 className='Studtable1'>Student Details and Marks</h2>
             <TableContainer className='Studtable'>
                 <Table aria-label="simple table">
                     <TableHead>

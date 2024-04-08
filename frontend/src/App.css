@@ -36,11 +36,12 @@ html {
     font-family: Arial, sans-serif;
 }
 
-.landing-page {
+.landing-page{
     background-image: url("./images/large-triangles.png");
     background-size: cover;
     background-position: center;
     height: 100vh;
+    width: 100vw; /* Set width to full viewport width */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +88,6 @@ body.dark,
 body.dark .navbar a {
     color: white;
 }
-
 
 .btns {
     position: relative;
@@ -179,6 +179,7 @@ button.learn-more:active::before {
     -webkit-transform: translate3d(0, 0, -1em);
     transform: translate3d(0, 0, -1em);
 }
+
 /* Home Page css end */
 
 .tablewidth {
@@ -259,13 +260,20 @@ button.learn-more:active::before {
   height: 80vh;
 }
 
+.center {
+  padding-top: 20px;
+  font-size: 16px;
+  text-align: center;
+}
+
 .login-form {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 400px;
-
+  /* Center the form */
+  margin: auto;
 }
 
 /* Form heading */
@@ -332,14 +340,14 @@ button.learn-more:active::before {
 
 .edit-form {
   margin-top: 20px;
+  margin-left: 600px; /* Adjusted to shift the form box slightly to the right */
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #e4e9f7;
   max-width: 400px; /* Set a maximum width for the form */
-  /* margin-left: 100%; Align form to the left */
-  margin-right: auto;
 }
+
 
 .form-group {
   margin-bottom: 10px;
@@ -400,7 +408,7 @@ button:hover {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-  margin-top: 35px;
+  margin-top: 10px;
 }
 
 .form-group {
@@ -433,32 +441,32 @@ button:hover {
 
 /* Style the navigation bar */
 
-nav {
-  background-color: #333; /* Dark background color */
-  position: fixed; /* Fixed at the top */
+/* nav {
+  background-color: #333; Dark background color
+  position: fixed; Fixed at the top
   top: 0;
-  left: 0; /* Align to the left edge */
-  z-index: 1000; /* Ensures the navbar is above other content */
-}
-
+  left: 0; Align to the left edge
+  z-index: 1000; Ensures the navbar is above other content
+} */
+/* 
 nav ul {
-  list-style-type: none; /* Removes bullet points from the list */
-  display: flex; /* Align items in a row */
-  justify-content: flex-start; /* Align items to the start of the container */
-}
+  list-style-type: none; Removes bullet points from the list
+  display: flex; Align items in a row
+  justify-content: flex-start; Align items to the start of the container
+} */
 
-nav ul li a {
+/* nav ul li a {
   display: block;
-  color: white; /* Text color */
+  color: white; Text color
   text-align: center;
-  padding: 14px 16px; /* Padding for spacing */
-  text-decoration: none; /* Removes underlining from links */
+  padding: 14px 16px; Padding for spacing
+  text-decoration: none; Removes underlining from links
 }
 
-/* Change the link color on hover */
+Change the link color on hover
 nav ul li a:hover {
   background-color: #ddd;
   color: black;
-}
+} */
 
 /* Header end */

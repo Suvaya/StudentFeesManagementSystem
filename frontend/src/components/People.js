@@ -37,6 +37,17 @@ const People = () => {
         fetchStudents(); // Initial fetch on mount
     }, []);
 
+    // Reset input fields when editStudentId changes
+    useEffect(() => {
+        if (editStudentId !== null) {
+            const selectedStudent = students.find(student => student._id === editStudentId);
+            if (selectedStudent) {
+                setSubjectsInput('');
+                setFeesInput(selectedStudent.fees.toString());
+            }
+        }
+    }, [editStudentId, students]);
+
     const editSubjectsAndFees = async (studentId) => {
         const subjects = subjectsInput.split(',').map(subject => subject.trim()); // Assuming subjects are comma-separated
         const fees = parseInt(feesInput);
@@ -67,40 +78,71 @@ const People = () => {
     return (
         <>
             <TableContainer className={`peopletable ${theme === 'dark' ? 'dark' : ''}`}>
-    <Table aria-label="simple table">
-        <TableHead>
-            <TableRow>
-                <TableCell className="tables" align="center"><strong>Username</strong></TableCell>
-                <TableCell className="tables" align="center"><strong>Full Name</strong></TableCell>
-                <TableCell className="tables" align="center"><strong>Email</strong></TableCell>
-                <TableCell className="tables" align="center"><strong>Phone Number</strong></TableCell>
-                <TableCell className="tables" align="center"><strong>Subjects Studied</strong></TableCell>
-                <TableCell className="tables" align="center"><strong>Fees</strong></TableCell>
-                <TableCell className="tables" align="center"><strong>Actions</strong></TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {students.map((student) => (
-                <TableRow key={student._id}>
-                    <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.username}</TableCell>
-                    <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.fullName}</TableCell>
-                    <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.email}</TableCell>
-                    <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.phoneNumber}</TableCell>
-                    <TableCell className={theme === 'dark' ? 'dark-text' : ''}>
-                        {student.subjectsStudied?.map(subject => (
-                            <div key={subject._id}>{subject.subjectName} (Marks: {subject.marks})</div>
-                        )) || 'N/A'}
-                    </TableCell>
-                    <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.fees}</TableCell>
-                    <TableCell align="center">
-                        <button onClick={() => setEditStudentId(student._id)}>Edit</button>
-                    </TableCell>
-                </TableRow>
-            ))}
-        </TableBody>
-    </Table>
-</TableContainer>
-
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className="tables" align="center"><strong>Username</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Full Name</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Email</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Phone Number</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Subjects Studied</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Fees</strong></TableCell>
+                            <TableCell className="tables" align="center"><strong>Actions</strong></TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {students.map((student) => (
+                            <TableRow key={student._id}>
+                                <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.username}</TableCell>
+                                <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.fullName}</TableCell>
+                                <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.email}</TableCell>
+                                <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.phoneNumber}</TableCell>
+                                <TableCell className={theme === 'dark' ? 'dark-text' : ''}>
+                                    {student.subjectsStudied?.map(subject => (
+                                        <div key={subject._id}>{subject.subjectName} (Marks: {subject.marks})</div>
+                                    )) || 'N/A'}
+                                </TableCell>
+                                <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.fees}</TableCell>
+                                <TableCell align="center">
+                                    <button onClick={() => setEditStudentId(student._id)}>Edit</button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {editStudentId && (
+                <div className="edit-form">
+                    <h3>Edit Subjects and Fees</h3>
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        editSubjectsAndFees(editStudentId);
+                    }}>
+                        <div className="form-group">
+                            <label htmlFor="subjects">Subjects (comma-separated):</label>
+                            <input
+                                id="subjects"
+                                type="text"
+                                value={subjectsInput}
+                                onChange={(e) => setSubjectsInput(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="fees">Fees:</label>
+                            <input
+                                id="fees"
+                                type="number"
+                                value={feesInput}
+                                onChange={(e) => setFeesInput(e.target.value)}
+                            />
+                        </div>
+                        <div className="buttons">
+                            <button type="submit">Update</button>
+                            <button type="button" onClick={() => setEditStudentId(null)}>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            )}
         </>
     );
 };

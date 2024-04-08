@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import "../App.css";
 import {useAuth} from "../contexts/AuthContext"; // Update the path according to your file structure
 
 const SignIn = () => {
@@ -67,7 +69,7 @@ const SignIn = () => {
     };
 
     return (
-        <div className="signin-page">
+        <div className="landing-page">
             <div className="login-form">
                 <form onSubmit={handleSubmit}>
                     <h2>Sign In</h2>
@@ -96,6 +98,7 @@ const SignIn = () => {
                     <button type="submit">Sign In</button>
                 </form>
                 {loginError && <div className="error login-error">{loginError}</div>}
+                <p className="center"><Link to="/">Back</Link></p>
             </div>
         </div>
     );
