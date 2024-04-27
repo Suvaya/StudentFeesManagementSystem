@@ -6,6 +6,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import sms from "../images/student.png"; 
+import ".//../App.css";
 
 const StudInfo = () => {
     const { userId } = useAuth(); // Destructure to get userId from AuthContext
@@ -42,12 +44,61 @@ const StudInfo = () => {
         }
     }, [userId]);
 
+    // Function to calculate percentage
+    const calculatePercentage = () => {
+        if (!studentDetails) return 0;
+
+        let totalMarks = studentDetails.subjectsStudied.reduce((total, subject) => total + subject.marks, 0);
+        let totalSubjects = studentDetails.subjectsStudied.length;
+        // let percentage = (totalMarks / ((totalSubjects-1) * 100)) * 100;
+        let percentage = (totalMarks / (totalSubjects * 100)) * 100;
+        return percentage.toFixed(2);
+    };
+
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
     if (loading) return <div>Loading...</div>;
     if (!studentDetails) return <div>No student details found.</div>;
 
     return (
         <div>
-            <h2 className='Studtable1'>Student Details and Marks</h2>
+            <h1 className='Studtable1'>Dashboard</h1>
+            <div className="forname" style={{ position: 'relative' }}>
+                <div className="left">
+                  <span className="counter2">{formatDate(new Date())}</span>
+                  <span className="title1">Welcome Back, {studentDetails.fullName}</span>
+                  <span className="link">Always stay updated in your student portal</span>
+                </div>
+                <img src={sms} alt="Description" className="image-end" />
+            </div>
+
+            <div style={{ display: 'flex' }}>
+                <div className="widget">
+                    <div className="left">
+                        <span className="title">Rs.</span>
+                        <span className="counter">{studentDetails.fees}</span>
+                        <span className="link">Fee:</span>
+                    </div>
+                </div>
+                <div className="widget1">
+                    <div className="left">
+                        <span className="title">No. of Subject</span>
+                        <span className="counter1">{studentDetails.subjectsStudied.length}</span>
+                        <span className="link"></span>
+                    </div>
+                </div>
+                <div className="widget1">
+                    <div className="left">
+                        <span className="title">Percentage</span>
+                        <span className="counter">{calculatePercentage()}%</span>
+                        <span className="link"></span>
+                    </div>
+                </div>
+            </div>
+            <h2 className='Studtable1'><center>Student Details and Marks</center></h2>
             <TableContainer className='Studtable'>
                 <Table aria-label="simple table">
                     <TableHead>

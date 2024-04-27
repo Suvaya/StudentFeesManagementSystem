@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 
 const Sidebar = () => {
-  const { isLoggedIn, logout, username, role } = useAuth();
+  const { isLoggedIn, logout, role } = useAuth();
   const [isClosed, setIsClosed] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
@@ -24,7 +24,7 @@ const Sidebar = () => {
     student: [{ to: "/studinfo", label: "Profile" }],
   };
 
-  const toggleSidebar = () => setIsClosed(!isClosed);
+  // const toggleSidebar = () => setIsClosed(!isClosed);
 
   if (!isLoggedIn) {
     return null;
@@ -66,20 +66,20 @@ const Sidebar = () => {
             </a>
           </li>
 
-          <li className="mode" onClick={toggleTheme}>
-            <div className="sun-moon">
+          {/* <li className="mode" onClick={toggleTheme}> */}
+            {/* <div className="sun-moon">
               <i
-                className={`bx ${theme === "dark" ? "bx-sun" : "bx-moon"} icon`}
+                // className={`bx ${theme === "dark" ? "bx-sun" : "bx-moon"} icon`}
               ></i>
-            </div>
-            <span className="mode-text text">
-              {theme === "dark" ? "Light Mode" : "Dark Mode"}
-            </span>
+            </div> */}
+            {/* <span className="mode-text text"> */}
+              {/* {theme === "dark" ? "Light Mode" : "Dark Mode"} */}
+            {/* </span> */}
 
-            <div className="toggle-switch">
+            {/* <div className="toggle-switch">
               <span className="switch"></span>
             </div>
-          </li>
+          </li> */}
         </div>
       </div>
     </div>

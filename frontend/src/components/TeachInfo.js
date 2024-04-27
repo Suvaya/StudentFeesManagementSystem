@@ -6,6 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import sms from "../images/student.png"; 
 
 // const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -43,11 +44,45 @@ const TeachInfo = () => {
         }
     }, [userId]);
 
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
     if (loading) return <div>Loading...</div>;
     if (!teacherDetails) return <div>No teacher details found.</div>;
 
     return (
         <div>
+            <h1 className='Studtable1'>Dashboard</h1>
+            <div className="forname" style={{ position: 'relative' }}>
+                <div className="left">
+                  <span className="counter2">{formatDate(new Date())}</span>
+                  <span className="link">Track Your Students' Progress</span>
+                  <span className="title1">Welcome, {teacherDetails.fullName}</span>
+                </div>
+                <img src={sms} alt="Description" className="image-end" />
+            </div>
+            <div style={{ display: 'flex' }}>
+                <div className="widget">
+                    <div className="left">
+                        <span className="title">Total Revenue</span>
+                        <span className="counter">${teacherDetails.salary.toLocaleString()}</span>
+                    </div>
+                </div>
+                <div className="widget1">
+                    <div className="left">
+                        <span className="title">Number of Subject</span>
+                        <span className="counter1">{teacherDetails.subjectsTaught.length}</span>
+                    </div>
+                </div>
+                <div className="widget1">
+                    <div className="left">
+                        <span className="title">Notice</span>
+                        <span className="counter1"></span>
+                    </div>
+                </div>
+            </div>
             <h2 align="center" className='Teachtable'>Teacher Details</h2>
              <TableContainer className='Teachtable'>
                 <Table aria-label="simple table">

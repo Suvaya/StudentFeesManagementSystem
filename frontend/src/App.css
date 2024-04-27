@@ -84,10 +84,10 @@ html {
 }
 
 /* Dark mode text color */
-body.dark,
+/* body.dark,
 body.dark .navbar a {
     color: white;
-}
+} */
 
 .btns {
     position: relative;
@@ -470,3 +470,85 @@ nav ul li a:hover {
 } */
 
 /* Header end */
+.forname {
+  display: flex;
+  padding: 10px;
+  padding-left: 50px;
+  background-color: white;
+  border-radius: 10px;
+  width: 78%; /* Set the width of the Widget */
+  height: 160px; /* Set the height of the Widget */
+  margin-left: 278px; /* Move the widgets to the right */
+  margin-top: 40px;
+}
+
+.widget {
+  display: flex;
+  justify-content: space-between;
+  /* flex: 1; */
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  width: 300px; /* Set the width of the Widget */
+  height: 150px; /* Set the height of the Widget */
+  margin-left: 335px; /* Move the widgets to the right */
+  margin-top: 30px;
+}
+
+.widget1{
+  display: flex;
+  justify-content: space-between;
+  /* flex: 1; */
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+  width: 300px; /* Set the width of the Widget */
+  height: 150px; /* Set the height of the Widget */
+  margin-left: 50px; /* Move the widgets to the right */
+  margin-top: 30px;
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.title1 {
+  font-weight: bold;
+  font-size: 50px;
+  margin-bottom: 5px; /* Reduce the margin between title1 and link */
+}
+
+.counter {
+  font-size: 35px;
+  padding-left: 70px;
+}
+
+.counter1 {
+  font-size: 35px;
+  padding-left: 130px;
+}
+
+.counter2 {
+  font-size: 15px;
+  margin-top: 5px; /* Reduce the margin between counter2 and title1 */
+  color: blue;
+}
+
+.link {
+  font-size: 15px;
+}
+
+.image-end {
+  position: absolute;
+  right: 50px;
+  bottom: 0;
+  width: 200px;
+  height: 250px;
+}
