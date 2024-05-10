@@ -15,7 +15,7 @@ function UserList({ role }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:5001/users')
+        fetch('http://localhost:5000/users')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -39,7 +39,7 @@ function UserList({ role }) {
 
     const handleDelete = (userId) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
-            fetch(`http://localhost:5001/users/${userId}`, { method: 'DELETE' })
+            fetch(`http://localhost:5000/users/${userId}`, { method: 'DELETE' })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');

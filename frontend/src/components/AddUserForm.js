@@ -35,7 +35,7 @@ function AddUserForm() {
         };
 
         try {
-            const response = await fetch('http://localhost:5001/users', {
+            const response = await fetch('http://localhost:5000/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

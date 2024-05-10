@@ -18,7 +18,7 @@ function EditUserForm() {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:5001/users/${userId}`)
+        fetch(`http://localhost:5000/users/${userId}`)
             .then(response => response.json())
             .then(data => {
                 const formattedDate = data.dateJoined ? new Date(data.dateJoined).toISOString().split('T')[0] : '';

@@ -17,7 +17,7 @@ const StudInfo = () => {
     useEffect(() => {
         const fetchStudentDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5001/users/role/student/${userId}`, {
+                const response = await fetch(`http://localhost:5000/users/role/student/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

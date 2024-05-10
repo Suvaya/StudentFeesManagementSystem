@@ -20,7 +20,7 @@ const People = () => {
     const fetchStudents = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch('http://localhost:5001/users/role/student');
+            const response = await fetch('http://localhost:5000/users/role/student');
             if (!response.ok) {
                 throw new Error('Something went wrong!');
             }

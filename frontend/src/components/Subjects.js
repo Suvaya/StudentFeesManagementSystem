@@ -6,7 +6,7 @@ function Subjects() {
 
     // Fetch all subjects on component mount
     useEffect(() => {
-        fetch('http://localhost:5001/users/subjects')
+        fetch('http://localhost:5000/users/subjects')
             .then(response => response.json())
             .then(data => setSubjects(data))
             .catch(error => console.error('Error fetching subjects:', error));
@@ -15,7 +15,7 @@ function Subjects() {
     // Handle adding a new subject
     const addSubject = (e) => {
         e.preventDefault(); // Prevent form from submitting traditionally
-        fetch('http://localhost:5001/users/subjects', {
+        fetch('http://localhost:5000/users/subjects', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const TeachInfo = () => {
     useEffect(() => {
         const fetchTeacherDetails = async () => {
             try {
-                const response = await fetch(`http://localhost:5001/users/role/teacher/${userId}`, {
+                const response = await fetch(`http://localhost:5000/users/role/teacher/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

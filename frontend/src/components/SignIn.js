@@ -31,7 +31,7 @@ const SignIn = () => {
         setLoginError("");
         if (validateForm()) {
             try {
-                const response = await axios.post('http://localhost:5001/api/auth/login', { email: userInput.username, password: userInput.password });
+                const response = await axios.post('http://localhost:5000/api/auth/login', { email: userInput.username, password: userInput.password });
                 const { token, role, username, userId } = response.data;
 
                 // Store the token in localStorage or any other secure storage
