@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
 
 function UserList({ role }) {
     const [users, setUsers] = useState([]);
@@ -8,7 +15,7 @@ function UserList({ role }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:5000/users')
+        fetch('http://localhost:5001/users')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -32,7 +39,7 @@ function UserList({ role }) {
 
     const handleDelete = (userId) => {
         if (window.confirm("Are you sure you want to delete this user?")) {
-            fetch(`http://localhost:5000/users/${userId}`, { method: 'DELETE' })
+            fetch(`http://localhost:5001/users/${userId}`, { method: 'DELETE' })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -50,30 +57,32 @@ function UserList({ role }) {
 
     return (
         <div>
-            <h2>{role.charAt(0).toUpperCase() + role.slice(1)} List</h2>
-            <table>
-                <thead>
-                <tr>
-                    <th>S.N.</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {users.filter(user => user.role === role || (Array.isArray(user.roles) && user.roles.includes(role))).map((user, index) => (
-                    <tr key={user._id}>
-                        <td>{index + 1}</td>
-                        <td>{user.username}</td>
-                        <td>{user.email}</td>
-                        <td>
-                            <button onClick={() => handleEdit(user._id)}>Edit</button>
-                            <button onClick={() => handleDelete(user._id)}>Delete</button>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+            <div className='usertab'><h2>{role.charAt(0).toUpperCase() + role.slice(1)} List</h2></div>
+            <TableContainer className="usertab">
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className='userstable'>S.N.</TableCell>
+                            <TableCell className='userstable'>Username</TableCell>
+                            <TableCell className='userstable'>Email</TableCell>
+                            <TableCell className='userstable'>Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {users.filter(user => user.role === role || (Array.isArray(user.roles) && user.roles.includes(role))).map((user, index) => (
+                            <TableRow key={user._id}>
+                                <TableCell>{index + 1}</TableCell>
+                                <TableCell>{user.username}</TableCell>
+                                <TableCell>{user.email}</TableCell>
+                                <TableCell>
+                                    <Button variant="contained" color="primary" onClick={() => handleEdit(user._id)}>Edit</Button>
+                                    <Button variant="contained" color="secondary" onClick={() => handleDelete(user._id)}>Delete</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </div>
     );
 }

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
 
 function EditUserForm() {
     const { userId } = useParams();
     const navigate = useNavigate();
+    const { theme } = useTheme();
     const [formData, setFormData] = useState({
         fullName: '',
         username: '',
@@ -16,7 +18,7 @@ function EditUserForm() {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:5000/users/${userId}`)
+        fetch(`http://localhost:5001/users/${userId}`)
             .then(response => response.json())
             .then(data => {
                 const formattedDate = data.dateJoined ? new Date(data.dateJoined).toISOString().split('T')[0] : '';
@@ -52,7 +54,7 @@ function EditUserForm() {
         };
 
         try {
-            const response = await fetch(`http://localhost:5000/users/${userId}`, {
+            const response = await fetch(`http://localhost:5001/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,41 +75,34 @@ function EditUserForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className={`user-form ${theme === 'dark' ? 'dark' : ''}`} onSubmit={handleSubmit}>
             <div>
-                <label>Full Name:
-                    <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required />
-                </label>
+                <label htmlFor="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
             </div>
             <div>
-                <label>Username:
-                    <input type="text" name="username" value={formData.username} onChange={handleChange} required />
-                </label>
+                <label htmlFor="username">Username:</label>
+                <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
             </div>
             <div>
-                <label>Email:
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-                </label>
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
             </div>
             <div>
-                <label>Password (leave blank if unchanged):
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} />
-                </label>
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
             </div>
             <div>
-                <label>Address:
-                    <input type="text" name="address" value={formData.address} onChange={handleChange} />
-                </label>
+                <label htmlFor="address">Address:</label>
+                <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
             </div>
             <div>
-                <label>Phone Number:
-                    <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-                </label>
+                <label htmlFor="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
             </div>
             <div>
-                <label>Date Joined:
-                    <input type="date" name="dateJoined" value={formData.dateJoined} onChange={handleChange} />
-                </label>
+                <label htmlFor="dateJoined">Date Joined:</label>
+                <input type="date" id="dateJoined" name="dateJoined" value={formData.dateJoined} onChange={handleChange} />
             </div>
             <div>
                 <label>Roles:</label>
@@ -118,6 +113,7 @@ function EditUserForm() {
             </div>
             <button type="submit">Update User</button>
         </form>
+
     );
 }
 
