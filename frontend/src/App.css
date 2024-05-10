@@ -182,6 +182,7 @@ button.learn-more:active::before {
 
 /* Home Page css end */
 
+
 .tablewidth {
   width: 23.3%; /* Adjust this value as needed */
   /* font-weight: bold; Add this line to make the text bold */
@@ -214,10 +215,10 @@ button.learn-more:active::before {
   color: white; Text color in dark mode 
 } */
 
-.Teachertable{
-  margin-top: 50px; /* Adjust the value as needed */
-  width: 85% !important;
-  margin-left: 230px;
+.Teachertable {
+  margin-top: 50px;
+  width: 100% !important;
+  margin-left: 260px;
 }
 
 .Studenttable{
