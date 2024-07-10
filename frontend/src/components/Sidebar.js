@@ -14,7 +14,7 @@ const Sidebar = () => {
     admin: [
       { to: "/users", label: "Users" },
       { to: "/teachers", label: "Teachers" },
-      { to: "/people", label: "People" },
+      { to: "/people", label: "Students" },
       { to: "/add-user", label: "Add User" },
     ],
     teacher: [

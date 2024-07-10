@@ -43,7 +43,7 @@ const People = () => {
             const selectedStudent = students.find(student => student._id === editStudentId);
             if (selectedStudent) {
                 setSubjectsInput('');
-                setFeesInput(selectedStudent.fees.toString());
+                setFeesInput(selectedStudent.fees ? selectedStudent.fees.toString() : ''); // Handle undefined fees
             }
         }
     }, [editStudentId, students]);
@@ -102,7 +102,7 @@ const People = () => {
                                         <div key={subject._id}>{subject.subjectName} (Marks: {subject.marks})</div>
                                     )) || 'N/A'}
                                 </TableCell>
-                                <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.fees}</TableCell>
+                                <TableCell align="center" className={theme === 'dark' ? 'dark-text' : ''}>{student.fees || 'N/A'}</TableCell>
                                 <TableCell align="center">
                                     <button onClick={() => setEditStudentId(student._id)}>Edit</button>
                                 </TableCell>
