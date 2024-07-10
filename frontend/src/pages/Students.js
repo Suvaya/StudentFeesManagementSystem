@@ -22,7 +22,7 @@ const StudentsByTeacherSubject = () => {
             if (!isLoggedIn) return;
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5001/users/students/mysubjects', {
+                const response = await axios.get('http://localhost:5000/users/students/mysubjects', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -58,7 +58,7 @@ const StudentsByTeacherSubject = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5001/users/${studentId}/subjects/marks`,
+                `http://localhost:5000/users/${studentId}/subjects/marks`,
                 { subjectName, newMarks: marks },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

@@ -16,7 +16,7 @@ const Teachers = () => {
     useEffect(() => {
         const fetchTeachers = async () => {
             try {
-                const response = await fetch('http://localhost:5001/users/role/teacher');
+                const response = await fetch('http://localhost:5000/users/role/teacher');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -49,7 +49,7 @@ const Teachers = () => {
     const handleEditFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`http://localhost:5001/users/${editingId}/updateFields`, {
+            const response = await fetch(`http://localhost:5000/users/${editingId}/updateFields`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
